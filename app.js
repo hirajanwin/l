@@ -28,7 +28,6 @@ app.use(express.static(path.join(__dirname, 'public')));
 if ('development' == app.get('env')) {
   app.use(express.errorHandler());
   hashids = new Hashids("arr! the brine of the sea!");
-  hostname = '127.0.0.1:3000';
   creds.redis = {
     port: 6379,
     host: '127.0.0.1',
@@ -69,6 +68,7 @@ app.get('/l/:hash', function (req, res) {
 });
 
 app.post('/l', function(req, res) {
+  console.log(req.headers.host);
   if (req.body.url.trim() === '') {
     res.send(400);
   }
@@ -78,7 +78,7 @@ app.post('/l', function(req, res) {
     urlObj = url.parse('http://' + req.body.url);
   }
 
-  if (urlObj.host === null || urlObj.host === hostname) {
+  if (urlObj.host === null || urlObj.host === req.headers.host) {
     res.send(400);
   }
 
@@ -91,7 +91,7 @@ app.post('/l', function(req, res) {
       hash = hashids.encrypt(parseInt(nextId));
       hashUrl = url.format({
         protocol: 'http',
-        host: hostname,
+        host: req.headers.host,
         pathname: '/l/' + hash
       });
 
