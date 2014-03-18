@@ -37,6 +37,7 @@ if ('development' == app.get('env')) {
 
 if ('production' == app.get('env')) {
   console.log('Running in production environment');
+  hashids = new Hashids(process.env.HASHID_SALT);
   redisUrl = url.parse(process.env.REDISCLOUD_URL);
   creds.redis = {
     port: redisUrl.port,
