@@ -60,3 +60,16 @@ button:active {
 
 .info {
 }
+
+#source {
+  position: fixed;
+  bottom: 0px;
+  right: 0px;
+  margin: 0px;
+  padding: 4px;
+}
+
+#source:before {
+  content: 'Source: ';
+  color: gray;
+}
