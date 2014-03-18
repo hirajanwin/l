@@ -5,6 +5,7 @@ var express = require('express')
   , path = require('path')
   , redis = require('redis')
   , Hashids = require('hashids')
+  , url = require('url')
   , hashids
   , rClient;
 
@@ -52,21 +53,38 @@ app.get('/l/:hash', function (req, res) {
 });
 
 app.post('/l', function(req, res) {
+  if (req.body.url.trim() === '') {
+    res.send(400);
+  }
+
+  urlObj = url.parse(req.body.url);
+  if (urlObj.protocol === null) {
+    urlObj = url.parse('http://' + req.body.url);
+  }
+
+  if (urlObj.hostname === null) {
+    res.send(400);
+  }
+
   rClient.get('nextId', function(err, nextId) {
     var hash;
 
     if (err) {
       res.send(500);
     } else {
-      console.log(nextId);
       hash = hashids.encrypt(parseInt(nextId));
-      console.log(hash);
+      hashUrl = url.format({
+        protocol: 'http',
+        host: hostname,
+        pathname: '/l/' + hash
+      });
+
       rClient.set(hash, req.body.url, function(err) {
          if (err) {
            res.send(500);
          } else {
            rClient.incr('nextId');
-           res.json({hash: 'http://' + hostname + '/l/' + hash, url: req.body.url});
+           res.json({hash: hashUrl, url: urlObj.href});
          }
       });
     }
