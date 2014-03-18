@@ -6,6 +6,7 @@ var express = require('express')
   , redis = require('redis')
   , Hashids = require('hashids')
   , url = require('url')
+  , creds = {}
   , hashids
   , rClient;
 
@@ -28,18 +29,25 @@ if ('development' == app.get('env')) {
   app.use(express.errorHandler());
   hashids = new Hashids("arr! the brine of the sea!");
   hostname = '127.0.0.1:3000';
+  creds.redis = {
+    port: 6379,
+    host: '127.0.0.1',
+    pass: ''
+  }
 }
 
 if ('production' == app.get('env')) {
   console.log('Running in production environment');
   redisUrl = url.parse(process.env.REDISCLOUD_URL);
-  app.set('redis-port', redisUrl.port);
-  app.set('redis-host', redisUrl.hostname);
-  app.set('redis-pass', redisUrl.auth.split(':')[1]);
+  creds.redis = {
+    port: redisUrl.port,
+    host: redisUrl.hostname,
+    pass: redisUrl.auth.split(':')[1]
+  }
 }
 
-rClient = redis.createClient(app.get('redis-port'), app.get('redis-host'));
-rClient.auth(app.get('redis-pass'), function(err) {
+rClient = redis.createClient(creds.redis.port, creds.redis.host);
+rClient.auth(creds.redis.pass, function(err) {
   if (err) { throw err; }
 });
 
