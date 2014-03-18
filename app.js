@@ -30,6 +30,14 @@ if ('development' == app.get('env')) {
   hostname = '127.0.0.1:3000';
 }
 
+if ('production' == app.get('env')) {
+  console.log('Running in production environment');
+  redisUrl = url.parse(process.env.REDISCLOUD_URL);
+  app.set('redis-port', redisUrl.port);
+  app.set('redis-host', redisUrl.hostname);
+  app.set('redis-pass', redisUrl.auth.split(':')[1]);
+}
+
 rClient = redis.createClient(app.get('redis-port'), app.get('redis-host'));
 rClient.auth(app.get('redis-pass'), function(err) {
   if (err) { throw err; }
