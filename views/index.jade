@@ -1,0 +1,9 @@
+extends layout
+
+block content
+  h1= title
+
+  form(method='post', action='/l')
+    label URL:
+      input(type='text', name='url')
+    button(type='submit') Submit
