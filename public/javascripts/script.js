@@ -10,7 +10,7 @@ $(document).ready(function() {
       $('input').val(data.hash).focus();
       $('p.error').html('');
     }).fail(function() {
-      $('p.error').html('You are a terrible person.');
+      $('p.error').html('You\'re doing it wrong.');
     });
 
     return false;
