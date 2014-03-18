@@ -1,9 +1,11 @@
 extends layout
 
 block content
-  h1= title
-
-  form(method='post', action='/l')
-    label URL:
-      input(type='text', name='url')
-    button(type='submit') Submit
+  .container-fluid
+    .row
+      .col-md-6.col-md-offset-3#box
+        p.info Enter an unwieldy URL below:
+        form(method='post', action='/l')
+          input(type='url', name='url', placeholder='http://www.zackmichener.net')
+          button(type='submit') Shorten
+        p.error

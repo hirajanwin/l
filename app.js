@@ -62,7 +62,7 @@ app.post('/l', function(req, res) {
     urlObj = url.parse('http://' + req.body.url);
   }
 
-  if (urlObj.hostname === null) {
+  if (urlObj.host === null || urlObj.host === hostname) {
     res.send(400);
   }
 
