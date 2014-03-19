@@ -5,6 +5,7 @@ body {
   height: 100%;
   overflow: hidden;
   background-image: url('http://zackmichener.net/bright_squares.png');
+  font-family: 'Georgia';
 }
 
 a {
@@ -20,8 +21,8 @@ a {
   position: absolute;
   top: 0px;
   bottom: 0px;
+  height: 177px;
   left: -5%;
-  height: 164px;
   width: 110%;
   margin: auto 0px;
   background: #eee;
@@ -33,19 +34,26 @@ form {
 }
 
 input, button {
+  display: inline-block;
+  padding: 10px 5px;
+  border-radius: 5px;
+  border: none;
+
   font-size: 24px;
-  padding: 9px;
   margin: 8px;
   background: #eee;
-  border: 1px solid gray;
+}
+
+input {
+  box-shadow: inset 1px 1px 5px -3px black;
 }
 
 button {
-  border-radius: 0px;
+  box-shadow: 1px 1px 5px -3px black;
+  background: linear-gradient(0deg, #eee, #fff) repeat scroll 0% 0% transparent;
 }
 
 button:active {
-  box-shadow: inset 0px 0px 2px gray;
 }
 
 #box p {
