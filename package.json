@@ -3,12 +3,17 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    "start": "node app.js"
+    "start": "node app.js",
+    "lint": "eslint ."
   },
   "dependencies": {
     "express": "3.4.8",
     "jade": "*",
     "redis": "~0.10.1",
     "hashids": "~0.3.3"
+  },
+  "devDependencies": {
+    "eslint": "^1.5.0",
+    "mocha": "^2.3.2"
   }
 }

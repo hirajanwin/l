@@ -1,14 +1,14 @@
-var express = require('express')
-  , routes = require('./routes')
-  , user = require('./routes/user')
-  , http = require('http')
-  , path = require('path')
-  , redis = require('redis')
-  , Hashids = require('hashids')
-  , url = require('url')
-  , creds = {}
-  , hashids
-  , rClient;
+var express = require('express'),
+  routes = require('./routes'),
+  user = require('./routes/user'),
+  http = require('http'),
+  path = require('path'),
+  redis = require('redis'),
+  Hashids = require('hashids'),
+  url = require('url'),
+  creds = {},
+  hashids,
+  rClient;
 
 var app = express();
 
@@ -31,7 +31,7 @@ if ('development' == app.get('env')) {
     port: 6379,
     host: '127.0.0.1',
     pass: ''
-  }
+  };
 }
 
 if ('production' == app.get('env')) {
@@ -42,7 +42,7 @@ if ('production' == app.get('env')) {
     port: redisUrl.port,
     host: redisUrl.hostname,
     pass: redisUrl.auth.split(':')[1]
-  }
+  };
 }
 
 rClient = redis.createClient(creds.redis.port, creds.redis.host);
